@@ -1,10 +1,17 @@
 package edu.mns.locmns.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Emprunt {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmprunt;
 
     private Date dateDemande;

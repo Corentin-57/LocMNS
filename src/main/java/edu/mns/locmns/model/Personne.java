@@ -1,6 +1,16 @@
 package edu.mns.locmns.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Personne {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nom;
     protected String prenom;

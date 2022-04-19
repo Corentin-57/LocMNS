@@ -1,11 +1,20 @@
 package edu.mns.locmns.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Gestionnaire extends Personne{
 
     public Gestionnaire(Integer id, String nom, String prenom, String mail) {
         super(id, nom, prenom, mail);
     }
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

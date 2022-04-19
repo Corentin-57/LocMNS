@@ -1,7 +1,15 @@
 package edu.mns.locmns.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Document {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDocument;
 
     private String nomDoc;

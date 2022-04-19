@@ -1,7 +1,13 @@
 package edu.mns.locmns.model;
 
 import edu.mns.locmns.model.Personne;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Utilisateur extends Personne {
     String numeroTelephone;
     String adresse;
@@ -11,6 +17,7 @@ public class Utilisateur extends Personne {
         this.numeroTelephone = numeroTelephone;
         this.adresse = adresse;
     }
+
 
     public Integer getId() {
         return id;
