@@ -16,7 +16,6 @@ public class AccueilController {
 
     @GetMapping("/connexion")
     public String connexion(){
-
         return "Connexion avec succès";
     }
 
