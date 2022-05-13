@@ -6,10 +6,6 @@ import edu.mns.locmns.model.Marque;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/Develop
 import java.util.List;
 
 @CrossOrigin

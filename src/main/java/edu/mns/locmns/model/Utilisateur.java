@@ -3,10 +3,7 @@ package edu.mns.locmns.model;
 import edu.mns.locmns.model.Personne;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

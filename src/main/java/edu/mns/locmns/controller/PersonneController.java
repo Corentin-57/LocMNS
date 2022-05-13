@@ -2,13 +2,12 @@ package edu.mns.locmns.controller;
 
 import edu.mns.locmns.model.Personne;
 import edu.mns.locmns.security.JwtUtils;
-import edu.mns.locmns.security.PersonneDetailsSeviceLocMns;
+import edu.mns.locmns.security.PersonneDetailsServiceLocMns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,7 @@ public class PersonneController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private PersonneDetailsSeviceLocMns personneDetailsSeviceLocMns;
+    private PersonneDetailsServiceLocMns personneDetailsServiceLocMns;
 
 
     @PostMapping("/connexion")            // renvoyer un token si l'utilisateur existe dans la BDD
@@ -42,7 +41,7 @@ public class PersonneController {
             throw new Exception(e);
         }
 
-        UserDetails userDetails = personneDetailsSeviceLocMns.loadUserByUsername(personne.getMail());
+        UserDetails userDetails = personneDetailsServiceLocMns.loadUserByUsername(personne.getMail());
 
         return jwtUtils.generateToken(userDetails);
     }

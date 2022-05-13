@@ -74,10 +74,10 @@
             <properties>
                 <secret-jwtLocMns>aucun-token</secret-jwtLocMns>
                 <adresse-bdd>localhost</adresse-bdd>
-                <nom-bdd>LocMNS</nom-bdd>
+                <nom-bdd>locmns</nom-bdd>
                 <nom-utilisateur-bdd>root</nom-utilisateur-bdd>
                 <!--suppress UnresolvedMavenProperty -->
-                <mot-de-passe-utilisateur-bdd>Yow11373@@@@</mot-de-passe-utilisateur-bdd>
+                <mot-de-passe-utilisateur-bdd>Mesemu_3</mot-de-passe-utilisateur-bdd>
             </properties>
 
         </profile>

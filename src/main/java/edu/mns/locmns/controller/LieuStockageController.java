@@ -13,10 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class LieuStockageController {
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/Develop
     private LieuStockageDao lieuStockageDao;
 
     @Autowired
