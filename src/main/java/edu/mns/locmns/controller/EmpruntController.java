@@ -28,16 +28,16 @@ public class EmpruntController {
         return this.empruntDao.findAll();
     }
 
-/*    @GetMapping("/emprunt/{idUtilisateur}/{idMateriel}/{dateEmprunt}/{dateRetour}/{NomLieuUtilisation}/{typeEvenement}")
+    @GetMapping("gestionnaire/emprunt/{idUtilisateur}/{idMateriel}/{dateEmprunt}")
     public Emprunt emprunt(@PathVariable Integer idUtilisateur,
                            @PathVariable Integer idMateriel,
                            @PathVariable String dateEmprunt)
                            throws ParseException {
         Date nouvelleDateEmprunt = new SimpleDateFormat("yyyy-MM-dd").parse(dateEmprunt);
 
-        return this.empruntDao.findByIdUtilisateurAndIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, nouvelleDateEmprunt).orElse(null);
+        return this.empruntDao.findByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, nouvelleDateEmprunt).orElse(null);
 
-    }*/
+    }
 
     @PostMapping("/reservation")
     public String createReservation (@RequestBody Emprunt emprunt){
