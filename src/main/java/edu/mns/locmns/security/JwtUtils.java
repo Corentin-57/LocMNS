@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @Service
 public class JwtUtils {
@@ -21,9 +25,22 @@ public class JwtUtils {
                 .getBody();
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(PersonneDetailsLocMns personneDetails){
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", personneDetails.getPersonne().getId()); //Ajouter id dans token
+        data.put("email", personneDetails.getUsername()); //Ajouter mail dans token
+
+        String listeDroit = personneDetails.getAuthorities()
+                .stream()
+                .map(role -> role.getAuthority())//Transforme les authorities en chaine de texte
+                .collect(Collectors.joining(","));//Recupére chaine jointe par une virgule
+
+        data.put("droits", listeDroit); //Ajoute les droits dans le token
+
         return Jwts.builder()
-                .setSubject(userDetails.getUsername()) //Générer le token
+                .setClaims(data)
+                .setSubject(personneDetails.getUsername()) //Générer le token
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }

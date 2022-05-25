@@ -45,10 +45,10 @@ public class EmpruntController {
         return "La demande de réservation est créee";
     }
 
-/*    @DeleteMapping("/gestionnaire/reservation/{idUtilisateur}/{idMateriel}/{dateEmprunt})")
+    @DeleteMapping("/gestionnaire/reservation/{idUtilisateur}/{idMateriel}/{dateEmprunt})")
     public String deleteReservation(@PathVariable Integer idUtilisateur, @PathVariable Integer idMateriel, @PathVariable Date dateEmprunt) {
-        //this.empruntDao.deleteByIdUtilisateurAndIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, dateEmprunt);
+        this.empruntDao.deleteByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, dateEmprunt);
         return "Le matériel a bien été supprimé";
 
-    }*/
+    }
 }

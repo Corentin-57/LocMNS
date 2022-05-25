@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.dao.MarqueDao;
 import edu.mns.locmns.model.Marque;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -24,11 +26,18 @@ public class MarqueController {
         return this.marqueDao.findAll();
     }
 
-    @GetMapping("/marque/{id}")
+    @GetMapping("/marque/{id}") //Retourner le code de retour de la requête
     //@JsonView(VueMarque.class)
-    public Marque marque(@PathVariable Integer id){
+    public ResponseEntity<Marque> marque(@PathVariable Integer id){
 
-        return this.marqueDao.findById(id).orElse(null);
+        Optional<Marque> retour = this.marqueDao.findById(id);
+
+        if(retour.isPresent()){
+            return ResponseEntity.ok(retour.get()); //Retourne notre marque
+        }else{
+            return ResponseEntity.noContent().build(); //Retourne le code erreur 204, pas de contenu
+        }
+        //return this.marqueDao.findById(id).orElse(null);
     }
 
     @PostMapping("/gestionnaire/marque")

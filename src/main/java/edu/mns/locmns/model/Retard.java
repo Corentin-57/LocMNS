@@ -15,6 +15,8 @@ public class Retard {
 
     private Date dateAlerteRetard;
 
+    private Date datePriseEnCharge;
+
     @ManyToOne
     @JoinColumn(name="id_personne_gestionnaire")
     private Gestionnaire gestionnaire;
@@ -39,5 +41,13 @@ public class Retard {
 
     public void setDateAlerteRetard(Date dateAlerteRetard) {
         this.dateAlerteRetard = dateAlerteRetard;
+    }
+
+    public Date getDatePriseEnCharge() {
+        return datePriseEnCharge;
+    }
+
+    public void setDatePriseEnCharge(Date datePriseEnCharge) {
+        this.datePriseEnCharge = datePriseEnCharge;
     }
 }

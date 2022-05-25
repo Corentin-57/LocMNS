@@ -16,9 +16,9 @@ public interface EmpruntDao extends JpaRepository<Emprunt, Integer> {
             Date date
     );
 
-/*    void deleteByidUtilisateurAndidMaterielAndDateEmprunt(
+    void deleteByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(
             Integer idUtilisateur,
             Integer idMateriel,
             Date dateEmrunt
-    );*/
+    );
 }

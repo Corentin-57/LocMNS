@@ -2,6 +2,7 @@ package edu.mns.locmns.controller;
 
 import edu.mns.locmns.model.Personne;
 import edu.mns.locmns.security.JwtUtils;
+import edu.mns.locmns.security.PersonneDetailsLocMns;
 import edu.mns.locmns.security.PersonneDetailsServiceLocMns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -28,7 +32,7 @@ public class PersonneController {
 
 
     @PostMapping("/connexion")            // renvoyer un token si l'utilisateur existe dans la BDD
-    public String connexion(@RequestBody Personne personne) throws Exception {
+    public Map<String, String> connexion(@RequestBody Personne personne) throws Exception {
 
         try {
             authenticationManager.authenticate(
@@ -38,11 +42,16 @@ public class PersonneController {
                     )
             );
         }catch (BadCredentialsException e) {
-            throw new Exception(e);
+            Map<String, String> retour = new HashMap<>();
+            retour.put("erreur", "Mauvais login/ mot de passe");
+
+            return retour;
         }
 
-        UserDetails userDetails = personneDetailsServiceLocMns.loadUserByUsername(personne.getMail());
+        PersonneDetailsLocMns personneDetails = personneDetailsServiceLocMns.loadUserByUsername(personne.getMail());
 
-        return jwtUtils.generateToken(userDetails);
+        Map<String, String> retour = new HashMap<>(); //Créé objet clef valeur que l'on pourra transformer en json
+        retour.put("token", jwtUtils.generateToken(personneDetails));
+        return retour;
     }
 }
