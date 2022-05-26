@@ -31,6 +31,16 @@ public class Dysfonctionnement {
     @JoinColumn(name="id_materiel")
     private Materiel materiel;
 
+    public Dysfonctionnement(Date dateDysfonctionnement, String descriptif, Utilisateur utilisateur) {
+        this.dateDysfonctionnement = dateDysfonctionnement;
+        this.descriptif = descriptif;
+        this.utilisateur = utilisateur;
+    }
+
+    public Dysfonctionnement() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -62,4 +72,13 @@ public class Dysfonctionnement {
     public void setDatePriseEnCharge(Date datePriseEnCharge) {
         this.datePriseEnCharge = datePriseEnCharge;
     }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
 }

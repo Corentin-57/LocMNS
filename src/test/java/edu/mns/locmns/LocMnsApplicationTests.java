@@ -49,4 +49,5 @@ class LocMnsApplicationTests {
         mvc.perform(get("/gestionnaire/liste-materiels")).andExpect(status().isForbidden());
     }
 
+
 }
