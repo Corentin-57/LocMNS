@@ -1,5 +1,7 @@
 package edu.mns.locmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,9 +14,10 @@ public class Materiel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMateriel;         // Integer car c'est un objet il peut contenir la valeur Null contrairement a int
+    @JsonView(View.ListeMaterielsUtilisateur.class)
+    private Integer idMateriel;  // Integer car c'est un objet il peut contenir la valeur Null contrairement a int
 
-
+    @JsonView(View.ListeMaterielsUtilisateur.class)
     private String numeroSerie;
 
     @ManyToOne

@@ -31,10 +31,11 @@ public class Dysfonctionnement {
     @JoinColumn(name="id_materiel")
     private Materiel materiel;
 
-    public Dysfonctionnement(Date dateDysfonctionnement, String descriptif, Utilisateur utilisateur) {
+    public Dysfonctionnement(Date dateDysfonctionnement, String descriptif, Utilisateur utilisateur, Materiel materiel) {
         this.dateDysfonctionnement = dateDysfonctionnement;
         this.descriptif = descriptif;
         this.utilisateur = utilisateur;
+        this.materiel = materiel;
     }
 
     public Dysfonctionnement() {
@@ -81,4 +82,11 @@ public class Dysfonctionnement {
         this.utilisateur = utilisateur;
     }
 
+    public Materiel getMateriel() {
+        return materiel;
+    }
+
+    public void setMateriel(Materiel materiel) {
+        this.materiel = materiel;
+    }
 }

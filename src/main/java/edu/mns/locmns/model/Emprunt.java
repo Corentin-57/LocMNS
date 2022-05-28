@@ -1,5 +1,6 @@
 package edu.mns.locmns.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -58,6 +59,7 @@ public class Emprunt {
 
     @ManyToOne
     @JoinColumn(name="id_materiel")
+    @JsonIgnore
     Materiel materiel;
 
     @ManyToOne

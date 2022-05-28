@@ -47,6 +47,5 @@ public class DysfonctionnementController {
 //        dysfonctionnementDao.save(new Dysfonctionnement(dysfonctionnement.getDateDysfonctionnement(), dysfonctionnement.getDescriptif(), dysfonctionnement.getUtilisateur()));
         this.dysfonctionnementDao.save(dysfonctionnement);
         return "La demande de dysfonctionnement est enregistrée";
-
     }
 }
