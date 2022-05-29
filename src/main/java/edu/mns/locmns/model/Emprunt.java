@@ -59,7 +59,6 @@ public class Emprunt {
 
     @ManyToOne
     @JoinColumn(name="id_materiel")
-    @JsonIgnore
     Materiel materiel;
 
     @ManyToOne
@@ -105,5 +104,29 @@ public class Emprunt {
 
     public void setDateValidation(Date dateValidation) {
         this.dateValidation = dateValidation;
+    }
+
+    public Materiel getMateriel() {
+        return materiel;
+    }
+
+    public void setMateriel(Materiel materiel) {
+        this.materiel = materiel;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Date getDateProlongation() {
+        return dateProlongation;
+    }
+
+    public void setDateProlongation(Date dateProlongation) {
+        this.dateProlongation = dateProlongation;
     }
 }

@@ -5,10 +5,12 @@ import edu.mns.locmns.model.Emprunt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -50,5 +52,18 @@ public class EmpruntController {
         this.empruntDao.deleteByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, dateEmprunt);
         return "Le matériel a bien été supprimé";
 
+    }
+
+    @PostMapping("/demande-prolongation")
+    public String ProlongationEmprunt(@RequestBody Emprunt emprunt){
+        Emprunt empruntBdd = empruntDao.findByUtilisateurIdAndMaterielIdMateriel(emprunt.getUtilisateur().getId(), emprunt.getMateriel().getIdMateriel()); //Recupère les infos post et effectue une recherche pour retrouver l'emprunt
+
+        if(empruntBdd.getDateProlongation() == null) { //Vérifie qu'une demande de prolongation ne soit pas en cours
+            empruntBdd.setDateProlongation(emprunt.getDateProlongation());
+            this.empruntDao.save(empruntBdd);
+            return "La demande de prolongation a été envoyée";
+        }else{
+            return "Une demande de prolongation est déjà en cours";
+        }
     }
 }

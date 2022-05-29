@@ -178,6 +178,7 @@ VALUES
 INSERT INTO emprunt (date_emprunt, date_retour ,date_validation, id_gestionnaire_entree, id_gestionnaire_retour, id_materiel, id_utilisateur) -- Emprunts retournés
 VALUES
     ('2020-01-25','2023-01-28','2022-09-09',1, 1, 1, 5),
+    ('2020-01-25','2023-01-28','2022-09-09',1, 1, 3, 5),
     ('2021-02-10','2022-04-05','2021-02-13', 2, 3, 5, 20),
     ('2021-09-30', '2022-03-15', '2022-04-02', 1, 2, 2, 9);
 INSERT INTO emprunt(date_emprunt, date_validation, date_retour, id_gestionnaire_entree, id_materiel, id_utilisateur, date_prolongation, id_gestionnaire_prolongation) -- Emprunts prolongés

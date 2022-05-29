@@ -21,4 +21,9 @@ public interface EmpruntDao extends JpaRepository<Emprunt, Integer> {
             Integer idMateriel,
             Date dateEmrunt
     );
+
+    Emprunt findByUtilisateurIdAndMaterielIdMateriel(
+            Integer idUtilisateur,
+            Integer idMateriel
+    );
 }

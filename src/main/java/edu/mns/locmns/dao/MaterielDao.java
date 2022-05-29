@@ -4,6 +4,7 @@ import edu.mns.locmns.model.Emprunt;
 import edu.mns.locmns.model.Materiel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
