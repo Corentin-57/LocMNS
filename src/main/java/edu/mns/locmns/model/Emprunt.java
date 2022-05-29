@@ -27,6 +27,7 @@ public class Emprunt {
 
     private Date dateProlongation;
 
+    private Date dateDemandeRetour;
 
 
     @ManyToMany
@@ -128,5 +129,13 @@ public class Emprunt {
 
     public void setDateProlongation(Date dateProlongation) {
         this.dateProlongation = dateProlongation;
+    }
+
+    public Date getdateDemandeRetour() {
+        return dateDemandeRetour;
+    }
+
+    public void setdateDemandeRetour(Date demandeRetour) {
+        this.dateDemandeRetour = demandeRetour;
     }
 }

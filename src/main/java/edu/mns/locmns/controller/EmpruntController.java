@@ -55,7 +55,7 @@ public class EmpruntController {
     }
 
     @PostMapping("/demande-prolongation")
-    public String ProlongationEmprunt(@RequestBody Emprunt emprunt){
+    public String DemandeProlongationEmprunt(@RequestBody Emprunt emprunt){
         Emprunt empruntBdd = empruntDao.findByUtilisateurIdAndMaterielIdMateriel(emprunt.getUtilisateur().getId(), emprunt.getMateriel().getIdMateriel()); //Recupère les infos post et effectue une recherche pour retrouver l'emprunt
 
         if(empruntBdd.getDateProlongation() == null) { //Vérifie qu'une demande de prolongation ne soit pas en cours
@@ -66,4 +66,19 @@ public class EmpruntController {
             return "Une demande de prolongation est déjà en cours";
         }
     }
+
+    @PostMapping("/demande-retour")
+    public String DemandeRetourEmprunt(@RequestBody Emprunt emprunt){
+        Emprunt empruntBdd = empruntDao.findByUtilisateurIdAndMaterielIdMateriel(emprunt.getUtilisateur().getId(), emprunt.getMateriel().getIdMateriel()); //Recupère les infos post et effectue une recherche pour retrouver l'emprunt
+
+        if(empruntBdd.getdateDemandeRetour() == null) { //Vérifie qu'une demande de retour ne soit pas en cours
+            empruntBdd.setdateDemandeRetour(emprunt.getdateDemandeRetour());
+            this.empruntDao.save(empruntBdd);
+            return "La demande de retour a été envoyée";
+        }else{
+            return "Une demande de retour est déjà en cours";
+        }
+    }
+
+
 }
