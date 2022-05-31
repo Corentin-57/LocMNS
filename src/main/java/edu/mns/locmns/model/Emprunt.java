@@ -17,9 +17,9 @@ public class Emprunt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmprunt;
 
-    private Date dateDemande;
+    private LocalDate dateDemande;
 
-    private Date dateEmprunt;
+    private LocalDate dateEmprunt;
 
     private Date dateRetour;
 
@@ -75,19 +75,19 @@ public class Emprunt {
         this.idEmprunt = idEmprunt;
     }
 
-    public Date getDateDemande() {
+    public LocalDate getDateDemande() {
         return dateDemande;
     }
 
-    public void setDateDemande(Date dateDemande) {
+    public void setDateDemande(LocalDate dateDemande) {
         this.dateDemande = dateDemande;
     }
 
-    public Date getDateEmprunt() {
+    public LocalDate getDateEmprunt() {
         return dateEmprunt;
     }
 
-    public void setDateEmprunt(Date dateEmprunt) {
+    public void setDateEmprunt(LocalDate dateEmprunt) {
         this.dateEmprunt = dateEmprunt;
     }
 
@@ -137,5 +137,21 @@ public class Emprunt {
 
     public void setdateDemandeRetour(Date demandeRetour) {
         this.dateDemandeRetour = demandeRetour;
+    }
+
+    public List<CadreUtilisation> getListeCadresUtilisation() {
+        return listeCadresUtilisation;
+    }
+
+    public void setListeCadresUtilisation(List<CadreUtilisation> listeCadresUtilisation) {
+        this.listeCadresUtilisation = listeCadresUtilisation;
+    }
+
+    public List<LieuUtilisation> getListeLieuxUtilisation() {
+        return listeLieuxUtilisation;
+    }
+
+    public void setListeLieuxUtilisation(List<LieuUtilisation> listeLieuxUtilisation) {
+        this.listeLieuxUtilisation = listeLieuxUtilisation;
     }
 }

@@ -24,6 +24,7 @@ public class TypeMaterielController {
 
     @GetMapping("/liste-typeMateriels")
     public List<TypeMateriel> ListeTypeMateriels(){
+        System.out.println(this.typeMaterielDao.findAll());
         return this.typeMaterielDao.findAll();
     }
 

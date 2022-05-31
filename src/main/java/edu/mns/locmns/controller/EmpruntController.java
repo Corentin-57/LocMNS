@@ -1,13 +1,17 @@
 package edu.mns.locmns.controller;
 
 import edu.mns.locmns.dao.EmpruntDao;
+import edu.mns.locmns.dao.MaterielDao;
 import edu.mns.locmns.model.Emprunt;
+import edu.mns.locmns.model.Materiel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +21,12 @@ import java.util.Optional;
 public class EmpruntController {
 
     private EmpruntDao empruntDao;
-
-
+    private MaterielDao materielDao;
 
     @Autowired
-    public EmpruntController(EmpruntDao empruntDao) {
+    public EmpruntController(EmpruntDao empruntDao, MaterielDao materielDao) {
         this.empruntDao = empruntDao;
+        this.materielDao = materielDao;
     }
 
     @GetMapping("/gestionnaire/liste-emprunts")
@@ -51,6 +55,32 @@ public class EmpruntController {
     public String deleteReservation(@PathVariable Integer idUtilisateur, @PathVariable Integer idMateriel, @PathVariable Date dateEmprunt) {
         this.empruntDao.deleteByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, dateEmprunt);
         return "Le matériel a bien été supprimé";
+
+    }
+
+    @PostMapping("/demande-emprunt")
+    public String demandeEmprunt (@RequestBody Emprunt emprunt){
+        System.out.println("idModele : " + emprunt.getMateriel().getModele().getIdModele());
+        System.out.println(emprunt.getDateEmprunt());
+
+        Integer idMaterielNouveau = this.materielDao.RechercheNouveauxMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele());
+        System.out.println("IdNouveau: " + idMaterielNouveau);
+
+        Integer idMaterielDB = this.materielDao.RechercheMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele(), emprunt.getDateEmprunt());
+        System.out.println("idMaterielDB: " + idMaterielDB);
+
+        emprunt.setDateDemande(LocalDate.from(LocalDateTime.now()));
+
+        if(idMaterielNouveau != null){
+            emprunt.getMateriel().setIdMateriel(idMaterielNouveau);
+            this.empruntDao.save(emprunt);
+            return "La demande d'emprunt a été envoyée";
+        }else if(idMaterielDB != null){
+            emprunt.getMateriel().setIdMateriel(idMaterielDB);
+            this.empruntDao.save(emprunt);
+            return "La demande d'emprunt a été envoyée";
+        }
+        return "Il n'y a pas de matériel disponible pour ce modèle";
 
     }
 

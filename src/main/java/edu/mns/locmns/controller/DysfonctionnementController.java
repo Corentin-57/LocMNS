@@ -39,6 +39,7 @@ public class DysfonctionnementController {
 
     @PostMapping("/saisir-dysfonctionnement")
     public String saisirDysfonctionnement (@RequestBody Dysfonctionnement dysfonctionnement){
+        System.out.println("D" + dysfonctionnement.getDateDysfonctionnement());
 //        System.out.println(dysfonctionnement.getUtilisateur().getId());
 //        Utilisateur utilisateur = this.utilisateurDao.findById(dysfonctionnement.getUtilisateur().getId())
 //                .orElseThrow(() -> new IllegalArgumentException());

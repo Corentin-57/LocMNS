@@ -110,4 +110,6 @@ public class Materiel {
     public void setDysfonctionnement(List<Dysfonctionnement> dysfonctionnement) {
         this.dysfonctionnement = dysfonctionnement;
     }
+
+
 }

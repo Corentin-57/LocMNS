@@ -21,7 +21,7 @@ public class ModeleController {
         this.modeleDao = modeleDao;
     }
 
-    @GetMapping("/gestionnaire/liste-modeles")
+    @GetMapping("/liste-modeles")
     public List<Modele> listemodeles() {
         return this.modeleDao.findAll();
     }
