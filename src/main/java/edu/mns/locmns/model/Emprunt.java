@@ -30,22 +30,6 @@ public class Emprunt {
     private Date dateDemandeRetour;
 
 
-    @ManyToMany
-    @JoinTable(
-            name="contient",
-            joinColumns = @JoinColumn(name="id_emprunt"),
-            inverseJoinColumns = @JoinColumn(name="id_cadre")
-    )
-    private List<CadreUtilisation> listeCadresUtilisation = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-            name="affecter",
-            joinColumns = @JoinColumn(name="id_emprunt"),
-            inverseJoinColumns = @JoinColumn(name="id_lieu")
-    )
-    private List<LieuUtilisation> listeLieuxUtilisation = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name="id_gestionnaire_entree")
     private Gestionnaire validationEntree;
@@ -66,6 +50,9 @@ public class Emprunt {
     @JoinColumn(name="id_utilisateur")
     private Utilisateur utilisateur;
 
+    @ManyToOne
+    @JoinColumn(name="id_cadre")
+    private CadreUtilisation cadreUtilisation;
 
     public Integer getIdEmprunt() {
         return idEmprunt;
@@ -139,19 +126,11 @@ public class Emprunt {
         this.dateDemandeRetour = demandeRetour;
     }
 
-    public List<CadreUtilisation> getListeCadresUtilisation() {
-        return listeCadresUtilisation;
+    public CadreUtilisation getCadreUtilisation() {
+        return cadreUtilisation;
     }
 
-    public void setListeCadresUtilisation(List<CadreUtilisation> listeCadresUtilisation) {
-        this.listeCadresUtilisation = listeCadresUtilisation;
-    }
-
-    public List<LieuUtilisation> getListeLieuxUtilisation() {
-        return listeLieuxUtilisation;
-    }
-
-    public void setListeLieuxUtilisation(List<LieuUtilisation> listeLieuxUtilisation) {
-        this.listeLieuxUtilisation = listeLieuxUtilisation;
+    public void setCadreUtilisation(CadreUtilisation cadreUtilisation) {
+        this.cadreUtilisation = cadreUtilisation;
     }
 }

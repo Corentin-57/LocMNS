@@ -4,6 +4,8 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -15,6 +17,9 @@ public class CadreUtilisation {
     private Integer idCadre;
 
     private String typeEvenement;
+
+//    @OneToMany(mappedBy = "cadreUtilisation")
+//    List<CadreUtilisation> listeCadresUtilisation = new ArrayList<>();
 
     public Integer getIdCadre() {
         return idCadre;

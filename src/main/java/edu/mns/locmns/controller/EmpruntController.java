@@ -60,23 +60,22 @@ public class EmpruntController {
 
     @PostMapping("/demande-emprunt")
     public String demandeEmprunt (@RequestBody Emprunt emprunt){
-        System.out.println("idModele : " + emprunt.getMateriel().getModele().getIdModele());
-        System.out.println(emprunt.getDateEmprunt());
 
+        //Récupère l'id d'un nouveau matériel qui correspond au modèle souhaité
         Integer idMaterielNouveau = this.materielDao.RechercheNouveauxMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele());
-        System.out.println("IdNouveau: " + idMaterielNouveau);
 
-        Integer idMaterielDB = this.materielDao.RechercheMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele(), emprunt.getDateEmprunt());
-        System.out.println("idMaterielDB: " + idMaterielDB);
+        //Récupère l'id d'un matériel déjà emprunté
+        Integer idMaterielAncien = this.materielDao.RechercheMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele(), emprunt.getDateEmprunt());
 
+        //Enregistre la date du jour pour la date de demande
         emprunt.setDateDemande(LocalDate.from(LocalDateTime.now()));
 
         if(idMaterielNouveau != null){
             emprunt.getMateriel().setIdMateriel(idMaterielNouveau);
             this.empruntDao.save(emprunt);
             return "La demande d'emprunt a été envoyée";
-        }else if(idMaterielDB != null){
-            emprunt.getMateriel().setIdMateriel(idMaterielDB);
+        }else if(idMaterielAncien != null){
+            emprunt.getMateriel().setIdMateriel(idMaterielAncien);
             this.empruntDao.save(emprunt);
             return "La demande d'emprunt a été envoyée";
         }
