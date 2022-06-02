@@ -129,5 +129,11 @@ public class EmpruntController {
         return "La demande d'emprunt est validée";
     }
 
+    @DeleteMapping("gestionnaire/supprimer-demande-emprunt/{idEmprunt}")
+    public String supprimerDemandeEmprunt(@PathVariable Integer idEmprunt){
+        this.empruntDao.deleteById(idEmprunt);
+        return "La demande a bien été supprimée";
+    }
+
 
 }

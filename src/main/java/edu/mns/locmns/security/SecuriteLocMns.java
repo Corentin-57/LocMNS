@@ -13,8 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @EnableWebSecurity
 public class SecuriteLocMns extends WebSecurityConfigurerAdapter { //Configuration
@@ -39,8 +42,8 @@ public class SecuriteLocMns extends WebSecurityConfigurerAdapter { //Configurati
     @Override //Gérer l'authorisation
     protected void configure(HttpSecurity http) throws Exception{
         //cors -> autorise toutes les requêtes qui viennent de l'extérieur (par défaut donc autorise toutes les requêtes et entêtes
-        http.cors().configurationSource((request -> new CorsConfiguration().applyPermitDefaultValues()))
-                .and()
+//        http.cors().configurationSource((request -> new CorsConfiguration().applyPermitDefaultValues()))
+                http.cors().and()
                     .csrf().disable() //On n'a pas de token formulaire (check pas le token lors réception requête)
                     .authorizeRequests()// Verifie le droit sur le lien cliqué
                     .antMatchers("/", "/connexion", "/contact" ).permitAll()
@@ -51,6 +54,19 @@ public class SecuriteLocMns extends WebSecurityConfigurerAdapter { //Configurati
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); //Filtre vérifie que le token est correct
 
+    }
+
+    @Bean
+    public CorsConfigurationSource configurationCrossOrigin() { //Configurer les méthodes autorisés (permet autoriser le requête delete
+        CorsConfiguration maConfiguration = new CorsConfiguration();
+
+        maConfiguration.setAllowedOrigins(List.of("*"));
+        maConfiguration.setAllowedMethods(List.of("HEAD","GET", "POST", "PUT", "DELETE", "PATCH"));
+        maConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", maConfiguration);
+        return source;
     }
 
     @Bean
