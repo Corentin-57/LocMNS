@@ -17,7 +17,7 @@ public class Materiel {
     @JsonView(View.ListeMaterielsUtilisateur.class)
     private Integer idMateriel;  // Integer car c'est un objet il peut contenir la valeur Null contrairement a int
 
-    @JsonView(View.ListeMaterielsUtilisateur.class)
+    @JsonView({View.ListeMaterielsUtilisateur.class, View.ListeDemandesEmprunt.class })
     private String numeroSerie;
 
     @ManyToOne
@@ -26,6 +26,7 @@ public class Materiel {
 
     @ManyToOne
     @JoinColumn(name="id_modele")
+    @JsonView(View.ListeDemandesEmprunt.class)
     private Modele modele;
 
     @ManyToOne

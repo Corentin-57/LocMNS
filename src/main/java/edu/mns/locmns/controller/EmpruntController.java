@@ -1,20 +1,20 @@
 package edu.mns.locmns.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.dao.EmpruntDao;
 import edu.mns.locmns.dao.MaterielDao;
+import edu.mns.locmns.dao.UtilisateurDao;
 import edu.mns.locmns.model.Emprunt;
-import edu.mns.locmns.model.Materiel;
+import edu.mns.locmns.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -22,11 +22,13 @@ public class EmpruntController {
 
     private EmpruntDao empruntDao;
     private MaterielDao materielDao;
+    private UtilisateurDao utilisateurDao;
 
     @Autowired
-    public EmpruntController(EmpruntDao empruntDao, MaterielDao materielDao) {
+    public EmpruntController(EmpruntDao empruntDao, MaterielDao materielDao, UtilisateurDao utilisateurDao) {
         this.empruntDao = empruntDao;
         this.materielDao = materielDao;
+        this.utilisateurDao = utilisateurDao;
     }
 
     @GetMapping("/gestionnaire/liste-emprunts")
@@ -68,7 +70,7 @@ public class EmpruntController {
         Integer idMaterielAncien = this.materielDao.RechercheMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele(), emprunt.getDateEmprunt());
 
         //Enregistre la date du jour pour la date de demande
-        emprunt.setDateDemande(LocalDate.from(LocalDateTime.now()));
+        emprunt.setDateDemande(LocalDateTime.now());
 
         if(idMaterielNouveau != null){
             emprunt.getMateriel().setIdMateriel(idMaterielNouveau);
@@ -84,7 +86,7 @@ public class EmpruntController {
     }
 
     @PostMapping("/demande-prolongation")
-    public String DemandeProlongationEmprunt(@RequestBody Emprunt emprunt){
+    public String demandeProlongationEmprunt(@RequestBody Emprunt emprunt){
         Emprunt empruntBdd = empruntDao.findByUtilisateurIdAndMaterielIdMateriel(emprunt.getUtilisateur().getId(), emprunt.getMateriel().getIdMateriel()); //Recupère les infos post et effectue une recherche pour retrouver l'emprunt
 
         if(empruntBdd.getDateProlongation() == null) { //Vérifie qu'une demande de prolongation ne soit pas en cours
@@ -97,7 +99,7 @@ public class EmpruntController {
     }
 
     @PostMapping("/demande-retour")
-    public String DemandeRetourEmprunt(@RequestBody Emprunt emprunt){
+    public String demandeRetourEmprunt(@RequestBody Emprunt emprunt){
         Emprunt empruntBdd = empruntDao.findByUtilisateurIdAndMaterielIdMateriel(emprunt.getUtilisateur().getId(), emprunt.getMateriel().getIdMateriel()); //Recupère les infos post et effectue une recherche pour retrouver l'emprunt
 
         if(empruntBdd.getdateDemandeRetour() == null) { //Vérifie qu'une demande de retour ne soit pas en cours
@@ -107,6 +109,24 @@ public class EmpruntController {
         }else{
             return "Une demande de retour est déjà en cours";
         }
+    }
+
+    @GetMapping("gestionnaire/listeDemandesEmprunt")
+    @JsonView(View.ListeDemandesEmprunt.class)
+    public List listeDemandesEmprunt(){
+
+        List listeDemandesEmprunt = this.empruntDao.findAllByDateDemandeIsNotNull();
+
+        return listeDemandesEmprunt;
+    }
+
+    @PostMapping("gestionnaire/valider-demande-emprunt")
+    public String validationDemandeEmprunt(@RequestBody Emprunt emprunt){
+        emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setDateValidation(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
+        emprunt.setDateDemande(null); //Met la date de demande à null la demande n'existe plus
+        empruntDao.save(emprunt);
+        return "La demande d'emprunt est validée";
     }
 
 

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,11 +20,13 @@ public interface EmpruntDao extends JpaRepository<Emprunt, Integer> {
     void deleteByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(
             Integer idUtilisateur,
             Integer idMateriel,
-            Date dateEmrunt
+            Date dateEmprunt
     );
 
     Emprunt findByUtilisateurIdAndMaterielIdMateriel(
             Integer idUtilisateur,
             Integer idMateriel
     );
+
+    List findAllByDateDemandeIsNotNull();
 }

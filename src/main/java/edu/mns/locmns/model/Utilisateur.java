@@ -1,6 +1,8 @@
 package edu.mns.locmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.model.Personne;
+import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -11,12 +13,14 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Utilisateur extends Personne {
 
+    @JsonView(View.ListeDemandesEmprunt.class)
     private String numeroTelephone;
 
     private String adresse;
 
     @ManyToOne
     @JoinColumn(name="id_statut")
+    @JsonView(View.ListeDemandesEmprunt.class)
     private Statut statut;
 
     @OneToMany(mappedBy = "utilisateur")
@@ -92,5 +96,13 @@ public class Utilisateur extends Personne {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    public List<Emprunt> getListeEmprunts() {
+        return listeEmprunts;
+    }
+
+    public void setListeEmprunts(List<Emprunt> listeEmprunts) {
+        this.listeEmprunts = listeEmprunts;
     }
 }

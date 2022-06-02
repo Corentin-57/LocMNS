@@ -176,8 +176,15 @@ VALUES
     ('2021-09-30', '2022-03-15', '2022-04-02', 1, 2, 2, 9, 3);
 INSERT INTO emprunt(date_emprunt, date_validation, date_retour, id_gestionnaire_entree, id_materiel, id_utilisateur, date_prolongation, id_gestionnaire_prolongation, id_cadre) -- Emprunts prolongés
 VALUES
-    ('2021-02-23', '2021-02-23', '2022-06-07', 3, 4, 12, '2023-04-01', 1, 5),
-    ('2021-03-04', '2021-03-06', '2022-06-01', 2, 1, 19, '2022-12-25', 2, 5);
+    ('2021-02-23 00:00:00', '2021-02-23', '2022-06-07 00:00:00', 3, 4, 12, '2023-04-01', 1, 5),
+    ('2021-03-04 00:00:00', '2021-03-06', '2022-06-01 00:00:00', 2, 1, 19, '2022-12-25', 2, 5);
+
+-- Création d'un emprunt avec une demande d'emprunt en cours (date demande présente)
+INSERT INTO emprunt(date_emprunt, date_demande, date_validation, date_retour, id_gestionnaire_entree, id_materiel, id_utilisateur, date_prolongation, id_gestionnaire_prolongation, id_cadre) -- Emprunts prolongés
+VALUES
+    ('2021-02-23', '2020-02-05', '2021-02-23', DATE '2022-06-07', 3, 8, 12, '2023-04-01', 1, 5),
+    ('2021-02-24', '2020-02-06', '2021-02-23', DATE '2022-06-07', 3, 9, 13, '2023-04-01', 1, 4);
+
 
 INSERT INTO dysfonctionnement(date_dysfonctionnement, descriptif, id_materiel, id_utilisateur) -- Dysfonctionnements déclarés
 VALUES

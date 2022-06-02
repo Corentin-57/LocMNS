@@ -1,12 +1,17 @@
 package edu.mns.locmns.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -15,19 +20,24 @@ public class Emprunt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.ListeDemandesEmprunt.class)
     private Integer idEmprunt;
 
-    private LocalDate dateDemande;
+    @JsonView(View.ListeDemandesEmprunt.class)
+    private LocalDateTime dateDemande;
 
-    private LocalDate dateEmprunt;
+    @JsonView(View.ListeDemandesEmprunt.class)
+    private LocalDateTime dateEmprunt;
 
-    private Date dateRetour;
+    @JsonView(View.ListeDemandesEmprunt.class)
+    private LocalDateTime dateRetour;
 
-    private Date dateValidation;
+    private LocalDateTime dateValidation;
 
-    private Date dateProlongation;
+    @JsonView(View.ListeDemandesEmprunt.class)
+    private LocalDateTime dateProlongation;
 
-    private Date dateDemandeRetour;
+    private LocalDateTime dateDemandeRetour;
 
 
     @ManyToOne
@@ -44,10 +54,12 @@ public class Emprunt {
 
     @ManyToOne
     @JoinColumn(name="id_materiel")
+    @JsonView(View.ListeDemandesEmprunt.class)
     Materiel materiel;
 
     @ManyToOne
     @JoinColumn(name="id_utilisateur")
+    @JsonView(View.ListeDemandesEmprunt.class)
     private Utilisateur utilisateur;
 
     @ManyToOne
@@ -62,35 +74,35 @@ public class Emprunt {
         this.idEmprunt = idEmprunt;
     }
 
-    public LocalDate getDateDemande() {
+    public LocalDateTime getDateDemande() {
         return dateDemande;
     }
 
-    public void setDateDemande(LocalDate dateDemande) {
+    public void setDateDemande(LocalDateTime dateDemande) {
         this.dateDemande = dateDemande;
     }
 
-    public LocalDate getDateEmprunt() {
+    public LocalDateTime getDateEmprunt() {
         return dateEmprunt;
     }
 
-    public void setDateEmprunt(LocalDate dateEmprunt) {
+    public void setDateEmprunt(LocalDateTime dateEmprunt) {
         this.dateEmprunt = dateEmprunt;
     }
 
-    public Date getDateRetour() {
+    public LocalDateTime getDateRetour() {
         return dateRetour;
     }
 
-    public void setDateRetour(Date dateRetour) {
+    public void setDateRetour(LocalDateTime dateRetour) {
         this.dateRetour = dateRetour;
     }
 
-    public Date getDateValidation() {
+    public LocalDateTime getDateValidation() {
         return dateValidation;
     }
 
-    public void setDateValidation(Date dateValidation) {
+    public void setDateValidation(LocalDateTime dateValidation) {
         this.dateValidation = dateValidation;
     }
 
@@ -110,19 +122,19 @@ public class Emprunt {
         this.utilisateur = utilisateur;
     }
 
-    public Date getDateProlongation() {
+    public LocalDateTime getDateProlongation() {
         return dateProlongation;
     }
 
-    public void setDateProlongation(Date dateProlongation) {
+    public void setDateProlongation(LocalDateTime dateProlongation) {
         this.dateProlongation = dateProlongation;
     }
 
-    public Date getdateDemandeRetour() {
+    public LocalDateTime getdateDemandeRetour() {
         return dateDemandeRetour;
     }
 
-    public void setdateDemandeRetour(Date demandeRetour) {
+    public void setdateDemandeRetour(LocalDateTime demandeRetour) {
         this.dateDemandeRetour = demandeRetour;
     }
 

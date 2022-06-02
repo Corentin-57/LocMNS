@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public interface MaterielDao extends JpaRepository<Materiel, Integer> {
 
     //Recherche d'un materiel présent table emprunt qui correspond au modèle selectionné  et qui a une date de demande null et une date de retour inférieure ou égale à la date de demande d'emprunt sasie par l'utilisateur (matériel déjà été emprunté)
     @Query(value = "SELECT materiel.id_materiel FROM materiel INNER JOIN modele ON materiel.id_modele = modele.id_modele INNER JOIN emprunt ON materiel.id_materiel = emprunt.id_materiel WHERE modele.id_modele = :idModele AND emprunt.date_demande IS NULL AND emprunt.date_retour <= :dateEmprunt LIMIT 1", nativeQuery = true)
-    Integer RechercheMaterielDemandeEmprunt(@Param("idModele")Integer idModele,@Param("dateEmprunt") LocalDate dateEmprunt);
+    Integer RechercheMaterielDemandeEmprunt(@Param("idModele")Integer idModele,@Param("dateEmprunt") LocalDateTime dateEmprunt);
 
     //Recherche d'un matériel qui n'est pas présent dans table emprunt (nouveau matériel)
     @Query(value="SELECT materiel.id_materiel FROM materiel INNER JOIN modele ON materiel.id_modele = modele.id_modele LEFT JOIN emprunt ON materiel.id_materiel = emprunt.id_materiel WHERE modele.id_modele = :idModele AND emprunt.id_emprunt IS NULL LIMIT 1", nativeQuery = true)

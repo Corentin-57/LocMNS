@@ -1,5 +1,7 @@
 package edu.mns.locmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -15,10 +17,13 @@ public class Personne {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    @JsonView(View.ListeDemandesEmprunt.class)
     protected String nom;
 
+    @JsonView(View.ListeDemandesEmprunt.class)
     protected String prenom;
 
+    @JsonView(View.ListeDemandesEmprunt.class)
     protected String mail;
 
     protected String motDePasse;
