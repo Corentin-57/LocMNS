@@ -24,7 +24,7 @@ public class Emprunt {
     private Integer idEmprunt;
 
     @JsonView(View.ListeDemandesEmprunt.class)
-    private LocalDateTime dateDemande;
+    private LocalDateTime dateDemandeEmprunt;
 
     @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateEmprunt;
@@ -32,11 +32,16 @@ public class Emprunt {
     @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateRetour;
 
-    private LocalDateTime dateValidation;
-
     @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateProlongation;
 
+    private LocalDateTime dateValidationEmprunt;
+
+    private LocalDateTime dateValidationRetour;
+
+    private LocalDateTime dateValidationProlongation;
+
+    @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateDemandeRetour;
 
 
@@ -75,11 +80,11 @@ public class Emprunt {
     }
 
     public LocalDateTime getDateDemande() {
-        return dateDemande;
+        return dateDemandeEmprunt;
     }
 
     public void setDateDemande(LocalDateTime dateDemande) {
-        this.dateDemande = dateDemande;
+        this.dateDemandeEmprunt = dateDemande;
     }
 
     public LocalDateTime getDateEmprunt() {
@@ -96,14 +101,6 @@ public class Emprunt {
 
     public void setDateRetour(LocalDateTime dateRetour) {
         this.dateRetour = dateRetour;
-    }
-
-    public LocalDateTime getDateValidation() {
-        return dateValidation;
-    }
-
-    public void setDateValidation(LocalDateTime dateValidation) {
-        this.dateValidation = dateValidation;
     }
 
     public Materiel getMateriel() {
@@ -144,5 +141,29 @@ public class Emprunt {
 
     public void setCadreUtilisation(CadreUtilisation cadreUtilisation) {
         this.cadreUtilisation = cadreUtilisation;
+    }
+
+    public LocalDateTime getDateValidationEmprunt() {
+        return dateValidationEmprunt;
+    }
+
+    public void setDateValidationEmprunt(LocalDateTime dateValidationEmprunt) {
+        this.dateValidationEmprunt = dateValidationEmprunt;
+    }
+
+    public LocalDateTime getDateValidationRetour() {
+        return dateValidationRetour;
+    }
+
+    public void setDateValidationRetour(LocalDateTime dateValidationRetour) {
+        this.dateValidationRetour = dateValidationRetour;
+    }
+
+    public LocalDateTime getDateValidationProlongation() {
+        return dateValidationProlongation;
+    }
+
+    public void setDateValidationProlongation(LocalDateTime dateValidationProlongation) {
+        this.dateValidationProlongation = dateValidationProlongation;
     }
 }

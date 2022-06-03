@@ -115,7 +115,7 @@ public class EmpruntController {
     @JsonView(View.ListeDemandesEmprunt.class)
     public List listeDemandesEmprunt(){
 
-        List listeDemandesEmprunt = this.empruntDao.findAllByDateDemandeIsNotNull();
+        List listeDemandesEmprunt = this.empruntDao.findAllByDateDemandeEmpruntIsNotNull();
 
         return listeDemandesEmprunt;
     }
@@ -123,7 +123,7 @@ public class EmpruntController {
     @PostMapping("gestionnaire/valider-demande-emprunt")
     public String validationDemandeEmprunt(@RequestBody Emprunt emprunt){
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
-        emprunt.setDateValidation(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
+        emprunt.setDateValidationEmprunt(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
         emprunt.setDateDemande(null); //Met la date de demande à null la demande n'existe plus
         empruntDao.save(emprunt);
         return "La demande d'emprunt est validée";
@@ -133,6 +133,29 @@ public class EmpruntController {
     public String supprimerDemandeEmprunt(@PathVariable Integer idEmprunt){
         this.empruntDao.deleteById(idEmprunt);
         return "La demande a bien été supprimée";
+    }
+
+    @GetMapping("gestionnaire/listeRetoursEmprunt")
+    @JsonView(View.ListeDemandesEmprunt.class)
+    public List listeRetoursEmprunt(){
+        return this.empruntDao.findAllByDateDemandeRetourIsNotNull();
+    }
+
+    @PutMapping("gestionnaire/valider-retour-emprunt")
+    public String validationRetourEmprunt(@RequestBody Emprunt emprunt){
+        emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setDateValidationRetour(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
+        emprunt.setdateDemandeRetour(null); //Met la date de demande retour à null la demande de route n'existe plus
+        empruntDao.save(emprunt);
+        return "La demande de retour est validée";
+    }
+
+    @PutMapping("gestionnaire/supprimer-retour-emprunt") //On ne supprime pas tout l'emprunt mais on enlève uniquement date demande retour
+    public String supprimerRetourEmprunt(@RequestBody Emprunt emprunt){
+        emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setdateDemandeRetour(null); //Met la date de demande retour à null la demande est supprimée
+        empruntDao.save(emprunt);
+        return "La demande de retour a bien été supprimée";
     }
 
 

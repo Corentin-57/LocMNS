@@ -28,5 +28,7 @@ public interface EmpruntDao extends JpaRepository<Emprunt, Integer> {
             Integer idMateriel
     );
 
-    List findAllByDateDemandeIsNotNull();
+    List findAllByDateDemandeEmpruntIsNotNull();
+
+    List findAllByDateDemandeRetourIsNotNull();
 }
