@@ -166,4 +166,12 @@ public class Emprunt {
     public void setDateValidationProlongation(LocalDateTime dateValidationProlongation) {
         this.dateValidationProlongation = dateValidationProlongation;
     }
+
+    public Gestionnaire getValidationProlongation() {
+        return validationProlongation;
+    }
+
+    public void setValidationProlongation(Gestionnaire validationProlongation) {
+        this.validationProlongation = validationProlongation;
+    }
 }

@@ -34,6 +34,23 @@ public interface MaterielDao extends JpaRepository<Materiel, Integer> {
     //Recherche d'un matériel qui n'est pas présent dans table emprunt (nouveau matériel)
     @Query(value="SELECT materiel.id_materiel FROM materiel INNER JOIN modele ON materiel.id_modele = modele.id_modele LEFT JOIN emprunt ON materiel.id_materiel = emprunt.id_materiel WHERE modele.id_modele = :idModele AND emprunt.id_emprunt IS NULL LIMIT 1", nativeQuery = true)
     Integer RechercheNouveauxMaterielDemandeEmprunt(@Param("idModele") Integer idModele);
+
+    //List<Materiel> findAllBy
+
+
+    @Query(value= "SELECT count(*) FROM materiel m INNER JOIN etat e ON m.id_etat = e.id_etat  WHERE m.id_etat = 2", nativeQuery = true)
+    Integer RechercherNombreMaterielDefectueux();
+
+    //Recherche nombre matériels en stock (opérationnel)
+    @Query(value= "SELECT count(*) FROM materiel m INNER JOIN etat e ON m.id_etat = e.id_etat  WHERE m.id_etat = 1", nativeQuery = true)
+    Integer RechercherNombreMaterielOperationnel();
+
+
+    @Query(value="SELECT count(*) FROM materiel m INNER JOIN emprunt e ON m.id_materiel = e.id_materiel WHERE e.date_retour > curdate() AND e.date_validation_emprunt is null", nativeQuery = true)
+    Integer RechercherNombreMaterielEnRetard();
+
+    List<Materiel> findAllByEtatIdEtat(Integer idEtat);
+
 }
 
 

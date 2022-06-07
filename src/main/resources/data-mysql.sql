@@ -166,9 +166,11 @@ VALUES
     ("VP410",1,8,2),
     ("510FF",2,5,1),
     ("85DE",1,6,2),
-    ("77CR",1,7,2);
+    ("77CR",1,7,2),
+    ("88FR",2,7,2);
 
-INSERT INTO emprunt (date_emprunt, date_retour ,date_validation_emprunt, id_gestionnaire_entree, id_gestionnaire_retour, id_materiel, id_utilisateur, id_cadre) -- Emprunts retournés
+
+    INSERT INTO emprunt (date_emprunt, date_retour ,date_validation_emprunt, id_gestionnaire_entree, id_gestionnaire_retour, id_materiel, id_utilisateur, id_cadre) -- Emprunts retournés
 VALUES
     ('2020-01-25','2023-01-28','2022-09-09',1, 1, 1, 5, 2),
     ('2020-01-25','2023-01-28','2022-09-09',1, 1, 3, 5, 1),
@@ -190,6 +192,13 @@ INSERT INTO emprunt(date_emprunt, date_demande_retour, date_validation_emprunt, 
 VALUES
     ('2021-02-25', '2020-02-05', '2021-02-23', '2022-06-07', 3, 8, 14, '2023-04-01', 1, 5),
     ('2021-02-26', '2020-02-06', '2021-02-23', '2022-06-07', 3, 9, 15, '2023-04-01', 1, 4);
+
+-- Création d'un retard d'emprunt
+INSERT INTO emprunt(date_emprunt, date_demande_retour, date_retour, id_gestionnaire_entree, id_materiel, id_utilisateur, date_prolongation, id_gestionnaire_prolongation, id_cadre)
+VALUES
+    ('2021-02-25', '2020-02-05', '2025-06-07', 3, 8, 14, '2023-04-01', 1, 5);
+
+
 
 
 INSERT INTO dysfonctionnement(date_dysfonctionnement, descriptif, id_materiel, id_utilisateur) -- Dysfonctionnements déclarés

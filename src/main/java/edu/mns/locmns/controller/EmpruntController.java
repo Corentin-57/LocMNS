@@ -158,5 +158,43 @@ public class EmpruntController {
         return "La demande de retour a bien été supprimée";
     }
 
+    @GetMapping("gestionnaire/nombre-demandes-emprunt") //Recherche nomnre de demandes d'emprunt
+    public Integer NombreDemandesEmprunt(){
+        return this.empruntDao.RechercherNombreDemandesEmprunt();
+    }
+
+    @GetMapping("gestionnaire/nombre-retours-emprunt") //Recherche nombre de retours d'emprunt
+    public Integer NombreRetoursEmprunt(){
+        return this.empruntDao.RechercherNombreDemandesRetour();
+    }
+
+    @GetMapping("gestionnaire/nombre-prolongation-emprunt") //Recherche nombre de retours d'emprunt
+    public Integer RechercherNombreDemandesProlongation(){
+        return this.empruntDao.RechercherNombreDemandesProlongation();
+    }
+
+    @GetMapping("gestionnaire/listeProlongationEmprunt")
+    @JsonView(View.ListeDemandesEmprunt.class)
+    public List listeProlongationEmprunt(){
+        return this.empruntDao.findAllByDateProlongationIsNotNull();
+    }
+
+    @PutMapping("gestionnaire/valider-prolongation-emprunt")
+    public String validationProlongationEmprunt(@RequestBody Emprunt emprunt){
+        emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setDateValidationProlongation(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
+        emprunt.setDateRetour(emprunt.getDateProlongation());
+        emprunt.setDateProlongation(null); //Met la date de demande prolongation à null la demande de route n'existe plus
+        empruntDao.save(emprunt);
+        return "La demande de prolongation est validée";
+    }
+
+    @PutMapping("gestionnaire/supprimer-prolongation-emprunt") //On ne supprime pas tout l'emprunt mais on enlève uniquement date demande retour
+    public String supprimerProlonEmprunt(@RequestBody Emprunt emprunt){
+        emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setDateProlongation(null); //Met la date de demande retour à null la demande est supprimée
+        empruntDao.save(emprunt);
+        return "La demande de prolongation a bien été supprimée";
+    }
 
 }

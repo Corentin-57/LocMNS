@@ -55,4 +55,30 @@ public class MaterielController {
         return "Le materiel à été supprimer";
 
     }
+
+//    @GetMapping("/gestionnaire/materiels-disponibles") //Récupérer la liste des matériels disponibles, non empruntés
+//    public List<Materiel> listeMaterielsDisponibles(){
+//
+//    }
+
+    @GetMapping("/gestionnaire/materiels-defectueux") //Récupérer la liste des matériels défectueux
+    public List<Materiel> listeMaterielsDisponibles(){
+        return this.materielDao.findAllByEtatIdEtat(1);
+   }
+
+    @GetMapping("gestionnaire/nombre-materiels-defectueux") //Recherche nombre de retours d'emprunt
+    public Integer RechercherNombreMaterielsDefectueux(){
+        return this.materielDao.RechercherNombreMaterielDefectueux();
+    }
+
+    @GetMapping("gestionnaire/nombre-materiels-retard") //Recherche nombre de retours d'emprunt
+    public Integer RechercherNombreMaterielEnRetard(){
+        return this.materielDao.RechercherNombreMaterielEnRetard();
+    }
+
+    @GetMapping("gestionnaire/nombre-materiels-operationnel") //Recherche nombre de retours d'emprunt
+    public Integer RechercherNombreMaterielOperationnel(){
+        return this.materielDao.RechercherNombreMaterielOperationnel();
+    }
+
 }
