@@ -81,4 +81,10 @@ public class MaterielController {
         return this.materielDao.RechercherNombreMaterielOperationnel();
     }
 
+    @JsonView(View.ListeMaterielsNumeroSerie.class)
+    @GetMapping("gestionnaire/liste-materiel-numeroSerie")
+    public List<Materiel> ListeMaterielNumeroSerie(){
+        return this.materielDao.findAll();
+    }
+
 }

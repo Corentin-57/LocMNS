@@ -5,4 +5,6 @@ public class View {
     public class ListeMaterielsUtilisateur{}
 
     public class ListeDemandesEmprunt{}
+
+    public class ListeMaterielsNumeroSerie{}
 }

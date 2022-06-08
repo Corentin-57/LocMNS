@@ -105,4 +105,12 @@ public class Utilisateur extends Personne {
     public void setListeEmprunts(List<Emprunt> listeEmprunts) {
         this.listeEmprunts = listeEmprunts;
     }
+
+    public Statut getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Statut statut) {
+        this.statut = statut;
+    }
 }

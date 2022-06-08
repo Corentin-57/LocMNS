@@ -14,10 +14,10 @@ public class Materiel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(View.ListeMaterielsUtilisateur.class)
+    @JsonView({View.ListeMaterielsUtilisateur.class, View.ListeMaterielsNumeroSerie.class })
     private Integer idMateriel;  // Integer car c'est un objet il peut contenir la valeur Null contrairement a int
 
-    @JsonView({View.ListeMaterielsUtilisateur.class, View.ListeDemandesEmprunt.class })
+    @JsonView({View.ListeMaterielsUtilisateur.class, View.ListeDemandesEmprunt.class, View.ListeMaterielsNumeroSerie.class })
     private String numeroSerie;
 
     @ManyToOne
