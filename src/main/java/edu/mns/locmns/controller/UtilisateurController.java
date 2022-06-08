@@ -48,9 +48,15 @@ public class UtilisateurController {
         return encoder.encode("QYM49WMG7AE");
     }*/
 
+    //Création du compte utilisateur
+    @PostMapping("/donnees-CreationCompte")
+    public String donneesCreationCompte (@RequestBody Utilisateur utilisateur) {
 
-
-
+        utilisateur.setMotDePasse(encoder.encode(utilisateur.getMotDePasse()));
+        utilisateurDao.save(utilisateur);
+        System.out.println(utilisateur.getStatut());
+        return "Le compte utilisateur a bien été crée";
+    }
 
 
 }

@@ -39,13 +39,6 @@ public class DysfonctionnementController {
 
     @PostMapping("/saisir-dysfonctionnement")
     public String saisirDysfonctionnement (@RequestBody Dysfonctionnement dysfonctionnement){
-        System.out.println("D" + dysfonctionnement.getDateDysfonctionnement());
-//        System.out.println(dysfonctionnement.getUtilisateur().getId());
-//        Utilisateur utilisateur = this.utilisateurDao.findById(dysfonctionnement.getUtilisateur().getId())
-//                .orElseThrow(() -> new IllegalArgumentException());
-//
-//        dysfonctionnement.setUtilisateur(utilisateur);
-//        dysfonctionnementDao.save(new Dysfonctionnement(dysfonctionnement.getDateDysfonctionnement(), dysfonctionnement.getDescriptif(), dysfonctionnement.getUtilisateur()));
         this.dysfonctionnementDao.save(dysfonctionnement);
         return "La demande de dysfonctionnement est enregistrée";
     }

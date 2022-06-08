@@ -1,5 +1,7 @@
 package edu.mns.locmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -13,8 +15,10 @@ public class LieuStockage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.ListeLieux.class)
     private Integer idStock;
 
+    @JsonView(View.ListeLieux.class)
     private String nomLieuStockage;
 
     @OneToMany(mappedBy = "lieuStockage")

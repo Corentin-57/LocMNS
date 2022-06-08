@@ -31,8 +31,8 @@ public class Gestionnaire extends Personne{
 
 
     public Gestionnaire() {
-
     }
+
     public Gestionnaire(Integer id, String nom, String prenom, String mail) {
         super(id, nom, prenom, mail);
     }

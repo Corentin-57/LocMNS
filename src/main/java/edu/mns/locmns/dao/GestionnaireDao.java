@@ -13,14 +13,7 @@ import java.util.Optional;
 @Repository
 public interface GestionnaireDao extends JpaRepository<Gestionnaire, Integer> {
 
-    //Optional<Personne> findById(Personne personne);
     Optional<Personne> findByMail(String mail);
-
-
-    //Optional<Personne> personne =
-//    Optional<Personne> findByMail(String mail);
-/*    @Query("FROM ")*/
-
 
 
 }

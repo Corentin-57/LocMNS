@@ -16,7 +16,5 @@ public interface UtilisateurDao extends JpaRepository<Utilisateur, Integer> {
 
     Optional<Utilisateur> findByMail(String mail);
 
-//    @Query("FROM Utilisateur u JOIN Emprunt e ON u.id = e.idEmprunt WHERE e.dateDemande is not null")
-//    List<Utilisateur> RechercheUtilisateursDemandeEmprunt();
 
 }
