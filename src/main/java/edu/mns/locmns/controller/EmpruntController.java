@@ -5,6 +5,7 @@ import edu.mns.locmns.dao.EmpruntDao;
 import edu.mns.locmns.dao.MaterielDao;
 import edu.mns.locmns.dao.UtilisateurDao;
 import edu.mns.locmns.model.Emprunt;
+import edu.mns.locmns.model.Gestionnaire;
 import edu.mns.locmns.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -121,9 +122,12 @@ public class EmpruntController {
         return listeDemandesEmprunt;
     }
 
-    @PostMapping("gestionnaire/valider-demande-emprunt")
-    public String validationDemandeEmprunt(@RequestBody Emprunt emprunt){
+    @PostMapping("gestionnaire/valider-demande-emprunt/{idGestionnaire}")
+    public String validationDemandeEmprunt(@RequestBody Emprunt emprunt, @PathVariable Integer idGestionnaire){
+        Gestionnaire gestionnaire = new Gestionnaire();
+        gestionnaire.setId(idGestionnaire);
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setGestionnaire(gestionnaire);
         emprunt.setDateValidationEmprunt(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
         emprunt.setDateDemandeEmprunt(null); //Met la date de demande à null la demande n'existe plus
         empruntDao.save(emprunt);
@@ -142,11 +146,14 @@ public class EmpruntController {
         return this.empruntDao.findAllByDateDemandeRetourIsNotNull();
     }
 
-    @PutMapping("gestionnaire/valider-retour-emprunt")
-    public String validationRetourEmprunt(@RequestBody Emprunt emprunt){
+    @PutMapping("gestionnaire/valider-retour-emprunt/{idGestionnaire}")
+    public String validationRetourEmprunt(@RequestBody Emprunt emprunt, @PathVariable Integer idGestionnaire){
+        Gestionnaire gestionnaire = new Gestionnaire();
+        gestionnaire.setId(idGestionnaire);
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setGestionnaire(gestionnaire);
         emprunt.setDateValidationRetour(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
-        emprunt.setdateDemandeRetour(null); //Met la date de demande retour à null la demande de route n'existe plus
+        emprunt.setdateDemandeRetour(null); //Met la date de demande retour à null la demande de retour n'existe plus
         empruntDao.save(emprunt);
         return "La demande de retour est validée";
     }
@@ -180,9 +187,12 @@ public class EmpruntController {
         return this.empruntDao.findAllByDateProlongationIsNotNull();
     }
 
-    @PutMapping("gestionnaire/valider-prolongation-emprunt")
-    public String validationProlongationEmprunt(@RequestBody Emprunt emprunt){
+    @PutMapping("gestionnaire/valider-prolongation-emprunt/{idGestionnaire}")
+    public String validationProlongationEmprunt(@RequestBody Emprunt emprunt, @PathVariable Integer idGestionnaire){
+        Gestionnaire gestionnaire = new Gestionnaire();
+        gestionnaire.setId(idGestionnaire);
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setGestionnaire(gestionnaire);
         emprunt.setDateValidationProlongation(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
         emprunt.setDateRetour(emprunt.getDateProlongation());
         emprunt.setDateProlongation(null); //Met la date de demande prolongation à null la demande de route n'existe plus
