@@ -3,8 +3,13 @@ package edu.mns.locmns.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,10 +31,16 @@ public class Emprunt {
     @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateDemandeEmprunt;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateEmprunt;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateRetour;
 
     @JsonView(View.ListeDemandesEmprunt.class)
@@ -45,26 +56,31 @@ public class Emprunt {
     private LocalDateTime dateDemandeRetour;
 
 
-    @ManyToOne
-    @JoinColumn(name="id_gestionnaire_entree")
-    private Gestionnaire validationEntree;
+//    @ManyToOne
+//    @JoinColumn(name="id_gestionnaire_entree")
+//    //@JoinColumn(name ="id_personne", insertable = false, updatable = false) //Ignore this field when save or update request
+//    private Gestionnaire validationEntree;
+//
+//    @ManyToOne
+//    @JoinColumn(name="id_gestionnaire_retour")
+//    private Gestionnaire validationRetour;
+//
+//    @ManyToOne
+//    @JoinColumn(name="id_gestionnaire_prolongation")
+//    private Gestionnaire validationProlongation;
 
     @ManyToOne
-    @JoinColumn(name="id_gestionnaire_retour")
-    private Gestionnaire validationRetour;
-
-    @ManyToOne
-    @JoinColumn(name="id_gestionnaire_prolongation")
-    private Gestionnaire validationProlongation;
+    @JoinColumn(name="id_gestionnaire")
+    private Gestionnaire gestionnaire;
 
     @ManyToOne
     @JoinColumn(name="id_materiel")
-    @JsonView(View.ListeDemandesEmprunt.class)
-    Materiel materiel;
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+    private Materiel materiel;
 
     @ManyToOne
     @JoinColumn(name="id_utilisateur")
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     private Utilisateur utilisateur;
 
     @ManyToOne
@@ -79,12 +95,12 @@ public class Emprunt {
         this.idEmprunt = idEmprunt;
     }
 
-    public LocalDateTime getDateDemande() {
+    public LocalDateTime getDateDemandeEmprunt() {
         return dateDemandeEmprunt;
     }
 
-    public void setDateDemande(LocalDateTime dateDemande) {
-        this.dateDemandeEmprunt = dateDemande;
+    public void setDateDemandeEmprunt(LocalDateTime dateDemandeEmprunt) {
+        this.dateDemandeEmprunt = dateDemandeEmprunt;
     }
 
     public LocalDateTime getDateEmprunt() {
@@ -167,11 +183,13 @@ public class Emprunt {
         this.dateValidationProlongation = dateValidationProlongation;
     }
 
-    public Gestionnaire getValidationProlongation() {
-        return validationProlongation;
+    public Gestionnaire getGestionnaire() {
+        return gestionnaire;
     }
 
-    public void setValidationProlongation(Gestionnaire validationProlongation) {
-        this.validationProlongation = validationProlongation;
+    public void setGestionnaire(Gestionnaire gestionnaire) {
+        this.gestionnaire = gestionnaire;
     }
+
+
 }

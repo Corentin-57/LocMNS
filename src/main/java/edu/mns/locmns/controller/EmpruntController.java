@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -47,11 +48,11 @@ public class EmpruntController {
 
     }
 
-    @PostMapping("/reservation")
-    public String createReservation (@RequestBody Emprunt emprunt){
-        this.empruntDao.save(emprunt);
-        return "La demande de réservation est créee";
-    }
+//    @PostMapping("/reservation")
+//    public String createReservation (@RequestBody Emprunt emprunt){
+//        this.empruntDao.save(emprunt);
+//        return "La demande de réservation est créee";
+//    }
 
     @DeleteMapping("/gestionnaire/reservation/{idUtilisateur}/{idMateriel}/{dateEmprunt})")
     public String deleteReservation(@PathVariable Integer idUtilisateur, @PathVariable Integer idMateriel, @PathVariable Date dateEmprunt) {
@@ -70,7 +71,7 @@ public class EmpruntController {
         Integer idMaterielAncien = this.materielDao.RechercheMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele(), emprunt.getDateEmprunt());
 
         //Enregistre la date du jour pour la date de demande
-        emprunt.setDateDemande(LocalDateTime.now());
+        emprunt.setDateDemandeEmprunt(LocalDateTime.now());
 
         if(idMaterielNouveau != null){
             emprunt.getMateriel().setIdMateriel(idMaterielNouveau);
@@ -124,7 +125,7 @@ public class EmpruntController {
     public String validationDemandeEmprunt(@RequestBody Emprunt emprunt){
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
         emprunt.setDateValidationEmprunt(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
-        emprunt.setDateDemande(null); //Met la date de demande à null la demande n'existe plus
+        emprunt.setDateDemandeEmprunt(null); //Met la date de demande à null la demande n'existe plus
         empruntDao.save(emprunt);
         return "La demande d'emprunt est validée";
     }
@@ -190,11 +191,33 @@ public class EmpruntController {
     }
 
     @PutMapping("gestionnaire/supprimer-prolongation-emprunt") //On ne supprime pas tout l'emprunt mais on enlève uniquement date demande retour
-    public String supprimerProlonEmprunt(@RequestBody Emprunt emprunt){
+    public String supprimerProlongationEmprunt(@RequestBody Emprunt emprunt){
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
         emprunt.setDateProlongation(null); //Met la date de demande retour à null la demande est supprimée
         empruntDao.save(emprunt);
         return "La demande de prolongation a bien été supprimée";
+    }
+
+    @PostMapping("gestionnaire/demande-reservation")
+    public String enregistrerReservation(@RequestBody Emprunt emprunt){
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+//
+//        LocalDateTime newDateEmprunt = LocalDateTime.parse(emprunt.getDateEmprunt(), formatter);
+//        emprunt.setDateEmprunt(LocalDateTime.parse(emprunt.getDateEmprunt(), formatter));
+
+        //emprunt.setDateDemandeEmprunt(LocalDateTime.now());
+
+        emprunt.setDateValidationEmprunt(LocalDateTime.now()); //Validation automatique de la demande de réservation faite par le gestionnaire
+        this.empruntDao.save(emprunt);
+        return "La demande de réservation est enregistrée";
+    }
+
+
+    @GetMapping("gestionnaire/historique-materiels")
+    @JsonView(View.listeHistoriqueMateriels.class)
+    public List listeHistoriqueMateriels(){
+        return this.empruntDao.findAllByDateValidationRetourIsNotNull();
+
     }
 
 }

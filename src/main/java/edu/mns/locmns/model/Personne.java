@@ -17,13 +17,13 @@ public class Personne {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     protected String nom;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     protected String prenom;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     protected String mail;
 
     protected String motDePasse;

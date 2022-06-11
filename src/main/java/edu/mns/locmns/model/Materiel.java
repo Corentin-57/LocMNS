@@ -26,7 +26,7 @@ public class Materiel {
 
     @ManyToOne
     @JoinColumn(name="id_modele")
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     private Modele modele;
 
     @ManyToOne
@@ -111,6 +111,8 @@ public class Materiel {
     public void setDysfonctionnement(List<Dysfonctionnement> dysfonctionnement) {
         this.dysfonctionnement = dysfonctionnement;
     }
+
+
 
 
 }

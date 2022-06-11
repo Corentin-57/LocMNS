@@ -3,6 +3,7 @@ package edu.mns.locmns.dao;
 import edu.mns.locmns.model.Emprunt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -43,4 +44,12 @@ public interface EmpruntDao extends JpaRepository<Emprunt, Integer> {
 
     @Query("SELECT count(e) FROM Emprunt e WHERE e.dateProlongation is not null")
     Integer RechercherNombreDemandesProlongation();
+
+//    @Query("FROM Emprunt e INNER JOIN Materiel m ON e.materiel.idMateriel = m.idMateriel  WHERE e.dateValidationRetour is not null AND m.idMateriel = :idMateriel")
+//    List RechercherHistoriqueEmpruntEffectueUnMateriel(@Param("idMateriel") Integer idMateriel);
+
+    List findAllByDateValidationRetourIsNotNull();
+
+
+
 }
