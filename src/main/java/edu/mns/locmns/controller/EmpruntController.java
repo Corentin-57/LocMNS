@@ -6,6 +6,7 @@ import edu.mns.locmns.dao.MaterielDao;
 import edu.mns.locmns.dao.UtilisateurDao;
 import edu.mns.locmns.model.Emprunt;
 import edu.mns.locmns.model.Gestionnaire;
+import edu.mns.locmns.model.Materiel;
 import edu.mns.locmns.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -228,6 +229,16 @@ public class EmpruntController {
     public List listeHistoriqueMateriels(){
         return this.empruntDao.findAllByDateValidationRetourIsNotNull();
 
+    }
+
+    @PutMapping("gestionnaire/modification-demande-emprunt")
+    public String ModificationNumeroSerieDemandeEmprunt(@RequestBody Emprunt emprunt){
+        Materiel materiel = new Materiel();
+        materiel.setIdMateriel(emprunt.getMateriel().getIdMateriel());
+        emprunt = this.empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setMateriel(materiel);
+        this.empruntDao.save(emprunt);
+        return "La modification du numéro de série est bien effectuée";
     }
 
 }

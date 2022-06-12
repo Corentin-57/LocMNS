@@ -11,4 +11,6 @@ public class View {
     public class ListeLieux{}
 
     public class listeHistoriqueMateriels{}
+
+    public class listeNumerosSerieModification{}
 }

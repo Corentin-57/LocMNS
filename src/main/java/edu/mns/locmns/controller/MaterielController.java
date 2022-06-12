@@ -19,6 +19,7 @@ public class MaterielController {
     @Autowired
     public MaterielController(MaterielDao materielDao) { this.materielDao = materielDao;}
 
+    @JsonView(View.listeNumerosSerieModification.class)
     @GetMapping("/gestionnaire/liste-materiels")
     public List<Materiel> listeMateriels(){
 
