@@ -20,17 +20,6 @@ public class Gestionnaire extends Personne{
     @OneToMany(mappedBy = "gestionnaire")
     private List<Dysfonctionnement> listeDysfonctionnements = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "validationEntree")
-//    //@JoinColumn(name = "id_personne")
-//    private List<Emprunt> listeEmpruntsEntree = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "validationRetour")
-//    private List<Emprunt> listeEmpruntsRetour = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "validationProlongation")
-//    private List<Emprunt> listeEmpruntsProlongation = new ArrayList<>();
-
-
     public Gestionnaire() {
     }
 

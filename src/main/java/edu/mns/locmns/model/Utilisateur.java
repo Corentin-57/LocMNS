@@ -1,7 +1,6 @@
 package edu.mns.locmns.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import edu.mns.locmns.model.Personne;
 import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -33,7 +32,6 @@ public class Utilisateur extends Personne {
     private List<Emprunt> listeEmprunts = new ArrayList<>();
 
     public Utilisateur() {
-
     }
 
     public Utilisateur(Integer id, String nom, String prenom, String mail, String numeroTelephone, String adresse) {

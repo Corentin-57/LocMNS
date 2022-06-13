@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +30,7 @@ public class PersonneController {
     private PersonneDetailsServiceLocMns personneDetailsServiceLocMns;
 
 
-    @PostMapping("/connexion")            // renvoyer un token si l'utilisateur existe dans la BDD
+    @PostMapping("/connexion")  // renvoyer un token si l'utilisateur existe dans la BDD
     public Map<String, String> connexion(@RequestBody Personne personne) throws Exception {
 
         try {

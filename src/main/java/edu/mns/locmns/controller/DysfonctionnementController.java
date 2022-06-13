@@ -3,12 +3,9 @@ package edu.mns.locmns.controller;
 import edu.mns.locmns.dao.DysfonctionnementDao;
 import edu.mns.locmns.dao.UtilisateurDao;
 import edu.mns.locmns.model.Dysfonctionnement;
-import edu.mns.locmns.model.Emprunt;
-import edu.mns.locmns.model.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @CrossOrigin
@@ -27,13 +24,11 @@ public class DysfonctionnementController {
 
     @GetMapping("/gestionnaire/liste-dysfonctionnements")
     public List<Dysfonctionnement> listeDysfonctionnements() {
-
         return this.dysfonctionnementDao.findAll();
     }
 
     @GetMapping("/gestionnaire/liste-dysfonctionnements/{id}")
     public Dysfonctionnement dysfonctionnement(@PathVariable Integer id){
-
         return this.dysfonctionnementDao.findById(id).orElse(null);
     }
 

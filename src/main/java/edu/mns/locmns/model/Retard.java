@@ -25,8 +25,6 @@ public class Retard {
     @JoinColumn(name="id_personne_utilisateur")
     private Utilisateur utilisateur;
 
-    //Faut il mettre many to one inversé
-
     public Integer getId() {
         return id;
     }

@@ -1,23 +1,13 @@
 package edu.mns.locmns.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
-import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -37,9 +27,6 @@ public class Emprunt {
 
 
     @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-//    @JsonSerialize(using = LocalDateTimeSerializer.class)
-//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateRetour;
 
@@ -55,19 +42,6 @@ public class Emprunt {
     @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateDemandeRetour;
 
-
-//    @ManyToOne
-//    @JoinColumn(name="id_gestionnaire_entree")
-//    //@JoinColumn(name ="id_personne", insertable = false, updatable = false) //Ignore this field when save or update request
-//    private Gestionnaire validationEntree;
-//
-//    @ManyToOne
-//    @JoinColumn(name="id_gestionnaire_retour")
-//    private Gestionnaire validationRetour;
-//
-//    @ManyToOne
-//    @JoinColumn(name="id_gestionnaire_prolongation")
-//    private Gestionnaire validationProlongation;
 
     @ManyToOne
     @JoinColumn(name="id_gestionnaire")

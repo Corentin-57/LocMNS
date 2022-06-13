@@ -1,9 +1,7 @@
 package edu.mns.locmns.controller;
 
 import edu.mns.locmns.dao.UtilisateurDao;
-import edu.mns.locmns.model.Personne;
 import edu.mns.locmns.model.Utilisateur;
-import org.apache.tomcat.util.buf.UEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -36,10 +34,8 @@ public class UtilisateurController {
 
     @PostMapping("/gestionnaire/inscription")
     public String inscription(@RequestBody Utilisateur utilisateur) throws Exception {
-
         utilisateur.setMotDePasse(encoder.encode(utilisateur.getMotDePasse()));
         utilisateurDao.save(utilisateur);
-
         return "Utilisateur crée";
     }
 
@@ -57,6 +53,5 @@ public class UtilisateurController {
         System.out.println(utilisateur.getStatut());
         return "Le compte utilisateur a bien été crée";
     }
-
 
 }
