@@ -95,7 +95,7 @@ class LocMnsApplicationTests {
     void UtilisateurSaisirProlongation_reponse200ok() throws Exception{
         mvc.perform(post("/demande-prolongation")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"dateProlongation\": \"2022-06-14\", \"utilisateur\": {\"id\": 14}, \"materiel\": {\"idMateriel\": 1} }")
+                .content("{ \"dateProlongation\": \"2022-06-14 00:00:00\", \"utilisateur\": {\"id\": 14}, \"materiel\": {\"idMateriel\": 1} }")
         ).andExpect(status().isOk());
     }
 
@@ -104,13 +104,12 @@ class LocMnsApplicationTests {
     void UtilisateurSaisirRetour_reponse200ok() throws Exception{
         mvc.perform(post("/demande-retour")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"dateDemandeRetour\": \"2022-09-10\", \"utilisateur\": {\"id\": 5}, \"materiel\": {\"idMateriel\": 5} }")
+                .content("{ \"dateDemandeRetour\": \"2022-09-10 00:00:00\", \"utilisateur\": {\"id\": 5}, \"materiel\": {\"idMateriel\": 1} }")
         ).andExpect(status().isOk());
     }
 
 
-
-    //Tests page gestionnaire
+    //Tests page gestionnaire//
 
 
     //Test que l'on récupère bien la listes des roles du Statut
@@ -131,6 +130,17 @@ class LocMnsApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].nomLieuStockage").value("MNS"))
                 .andExpect(jsonPath("$[1].nomLieuStockage").value("IFA"));
+    }
+
+    // Test que le gestionnaire cree un compte utilisateur
+    // Il faut créer un compte auparavant
+    @Test
+    @WithMockUser(username = "lorem@icloud.com", roles = {"GESTIONNAIRE"})
+    void GestionnaireCreeCompte_reponse200ok() throws Exception{
+        mvc.perform(post("/donnees-CreationCompte")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"nom\": \"AGBULUT\", \"prenom\": \"Erdinc\", \"motDePasse\": \"$2a$10$NLdeNpChEhDulRjwXwSoV.rQY/3ikKBPqngGOa8RPYcWYYB5TB3RK\", \"mail\": \"erdinc@erdinc.com\", \"adresse\": \"103 Rue De Verdun\", \"numeroTelephone\": \"0629540449\", \"statut\": {\"id\": 1}  }")
+        ).andExpect(status().isOk());
     }
 
 }
