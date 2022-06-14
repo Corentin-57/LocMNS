@@ -13,4 +13,6 @@ public class View {
     public class listeHistoriqueMateriels{}
 
     public class listeNumerosSerieModification{}
+
+    public class listeModeles{}
 }

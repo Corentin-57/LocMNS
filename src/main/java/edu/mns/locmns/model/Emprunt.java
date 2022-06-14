@@ -31,6 +31,7 @@ public class Emprunt {
     private LocalDateTime dateRetour;
 
     @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateProlongation;
 
     private LocalDateTime dateValidationEmprunt;
@@ -40,6 +41,7 @@ public class Emprunt {
     private LocalDateTime dateValidationProlongation;
 
     @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateDemandeRetour;
 
 

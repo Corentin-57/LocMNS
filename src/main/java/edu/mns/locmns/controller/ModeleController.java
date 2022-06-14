@@ -1,7 +1,9 @@
 package edu.mns.locmns.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.dao.ModeleDao;
 import edu.mns.locmns.model.Modele;
+import edu.mns.locmns.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,9 @@ public class ModeleController {
         this.modeleDao = modeleDao;
     }
 
+
     @GetMapping("/liste-modeles")
+    @JsonView(View.listeModeles.class)
     public List<Modele> listemodeles() {
         return this.modeleDao.findAll();
     }

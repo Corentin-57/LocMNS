@@ -15,9 +15,10 @@ public class Modele {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.listeModeles.class)
     private Integer idModele;
 
-    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class, View.listeModeles.class})
     private String nomModele;
 
     @ManyToMany
