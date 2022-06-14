@@ -44,9 +44,6 @@ public interface EmpruntDao extends JpaRepository<Emprunt, Integer> {
     @Query("SELECT count(e) FROM Emprunt e WHERE e.dateProlongation is not null")
     Integer RechercherNombreDemandesProlongation();
 
-//    @Query("FROM Emprunt e INNER JOIN Materiel m ON e.materiel.idMateriel = m.idMateriel  WHERE e.dateValidationRetour is not null AND m.idMateriel = :idMateriel")
-//    List RechercherHistoriqueEmpruntEffectueUnMateriel(@Param("idMateriel") Integer idMateriel);
-
     List findAllByDateValidationRetourIsNotNull();
 
 }
