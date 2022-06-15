@@ -145,7 +145,7 @@ VALUES
     ('BK600',6,4),
     ('CD800',1,1),
     ('AS650',5,2),
-    ('Modele UX800',3,4);
+    ('UX800',3,4);
 
 INSERT INTO retard (id_personne_gestionnaire, id_personne_utilisateur)
 VALUES
