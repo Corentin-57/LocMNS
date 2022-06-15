@@ -5,8 +5,6 @@ import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -17,13 +15,13 @@ public class Personne {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     protected String nom;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     protected String prenom;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     protected String mail;
 
     protected String motDePasse;

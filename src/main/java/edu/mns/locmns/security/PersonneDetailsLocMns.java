@@ -1,7 +1,5 @@
 package edu.mns.locmns.security;
 
-import edu.mns.locmns.dao.GestionnaireDao;
-import edu.mns.locmns.model.Gestionnaire;
 import edu.mns.locmns.model.Personne;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 public class PersonneDetailsLocMns implements UserDetails {
 
@@ -29,8 +26,6 @@ public class PersonneDetailsLocMns implements UserDetails {
         //----GESTION DES DROITS PAR HERITAGE----
 
         ArrayList<SimpleGrantedAuthority> listeAuthority = new ArrayList<>();
-
-
 
         if(isGestionnaire) {
             listeAuthority.add(new SimpleGrantedAuthority("ROLE_GESTIONNAIRE"));

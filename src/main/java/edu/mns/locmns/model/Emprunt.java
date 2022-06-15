@@ -1,18 +1,13 @@
 package edu.mns.locmns.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.view.View;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
-import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -26,13 +21,17 @@ public class Emprunt {
     @JsonView(View.ListeDemandesEmprunt.class)
     private LocalDateTime dateDemandeEmprunt;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateEmprunt;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateRetour;
 
     @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateProlongation;
 
     private LocalDateTime dateValidationEmprunt;
@@ -42,29 +41,22 @@ public class Emprunt {
     private LocalDateTime dateValidationProlongation;
 
     @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateDemandeRetour;
 
 
     @ManyToOne
-    @JoinColumn(name="id_gestionnaire_entree")
-    private Gestionnaire validationEntree;
-
-    @ManyToOne
-    @JoinColumn(name="id_gestionnaire_retour")
-    private Gestionnaire validationRetour;
-
-    @ManyToOne
-    @JoinColumn(name="id_gestionnaire_prolongation")
-    private Gestionnaire validationProlongation;
+    @JoinColumn(name="id_gestionnaire")
+    private Gestionnaire gestionnaire;
 
     @ManyToOne
     @JoinColumn(name="id_materiel")
-    @JsonView(View.ListeDemandesEmprunt.class)
-    Materiel materiel;
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
+    private Materiel materiel;
 
     @ManyToOne
     @JoinColumn(name="id_utilisateur")
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     private Utilisateur utilisateur;
 
     @ManyToOne
@@ -79,12 +71,12 @@ public class Emprunt {
         this.idEmprunt = idEmprunt;
     }
 
-    public LocalDateTime getDateDemande() {
+    public LocalDateTime getDateDemandeEmprunt() {
         return dateDemandeEmprunt;
     }
 
-    public void setDateDemande(LocalDateTime dateDemande) {
-        this.dateDemandeEmprunt = dateDemande;
+    public void setDateDemandeEmprunt(LocalDateTime dateDemandeEmprunt) {
+        this.dateDemandeEmprunt = dateDemandeEmprunt;
     }
 
     public LocalDateTime getDateEmprunt() {
@@ -167,11 +159,13 @@ public class Emprunt {
         this.dateValidationProlongation = dateValidationProlongation;
     }
 
-    public Gestionnaire getValidationProlongation() {
-        return validationProlongation;
+    public Gestionnaire getGestionnaire() {
+        return gestionnaire;
     }
 
-    public void setValidationProlongation(Gestionnaire validationProlongation) {
-        this.validationProlongation = validationProlongation;
+    public void setGestionnaire(Gestionnaire gestionnaire) {
+        this.gestionnaire = gestionnaire;
     }
+
+
 }

@@ -15,9 +15,10 @@ public class Modele {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.listeModeles.class)
     private Integer idModele;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class, View.listeModeles.class})
     private String nomModele;
 
     @ManyToMany
@@ -34,7 +35,7 @@ public class Modele {
 
     @ManyToOne
     @JoinColumn(name="id_type")
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     private TypeMateriel typeMateriel;
 
     @OneToMany(mappedBy = "modele")
@@ -54,5 +55,37 @@ public class Modele {
 
     public void setNomModele(String nomModele) {
         this.nomModele = nomModele;
+    }
+
+    public List<Caracteristique> getListcaracteristique() {
+        return listcaracteristique;
+    }
+
+    public void setListcaracteristique(List<Caracteristique> listcaracteristique) {
+        this.listcaracteristique = listcaracteristique;
+    }
+
+    public Marque getMarque() {
+        return marque;
+    }
+
+    public void setMarque(Marque marque) {
+        this.marque = marque;
+    }
+
+    public TypeMateriel getTypeMateriel() {
+        return typeMateriel;
+    }
+
+    public void setTypeMateriel(TypeMateriel typeMateriel) {
+        this.typeMateriel = typeMateriel;
+    }
+
+    public List<Materiel> getMateriel() {
+        return materiel;
+    }
+
+    public void setMateriel(List<Materiel> materiel) {
+        this.materiel = materiel;
     }
 }

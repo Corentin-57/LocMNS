@@ -14,7 +14,7 @@ public class TypeMateriel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idType;
 
-    @JsonView(View.ListeDemandesEmprunt.class)
+    @JsonView({View.ListeDemandesEmprunt.class, View.listeHistoriqueMateriels.class})
     private String nomType;
 
     public Integer getIdType() {
@@ -32,4 +32,6 @@ public class TypeMateriel {
     public void setNomType(String nomType) {
         this.nomType = nomType;
     }
+
+
 }

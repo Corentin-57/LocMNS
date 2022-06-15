@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @CrossOrigin
@@ -24,7 +23,6 @@ public class TypeMaterielController {
 
     @GetMapping("/liste-typeMateriels")
     public List<TypeMateriel> ListeTypeMateriels(){
-        System.out.println(this.typeMaterielDao.findAll());
         return this.typeMaterielDao.findAll();
     }
 

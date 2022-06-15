@@ -1,6 +1,5 @@
 package edu.mns.locmns.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.dao.MarqueDao;
 import edu.mns.locmns.model.Marque;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +19,12 @@ public class MarqueController {
     public MarqueController(MarqueDao marqueDao) {this.marqueDao = marqueDao;}
 
     @GetMapping("/liste-marques")
-    //@JsonView(VueMarque.class)
     public List<Marque> listeMarques () {
-
         return this.marqueDao.findAll();
     }
 
     @GetMapping("/marque/{id}") //Retourner le code de retour de la requête
-    //@JsonView(VueMarque.class)
     public ResponseEntity<Marque> marque(@PathVariable Integer id){
-
         Optional<Marque> retour = this.marqueDao.findById(id);
 
         if(retour.isPresent()){
@@ -37,7 +32,6 @@ public class MarqueController {
         }else{
             return ResponseEntity.noContent().build(); //Retourne le code erreur 204, pas de contenu
         }
-        //return this.marqueDao.findById(id).orElse(null);
     }
 
     @PostMapping("/gestionnaire/marque")

@@ -5,6 +5,8 @@ import edu.mns.locmns.dao.EmpruntDao;
 import edu.mns.locmns.dao.MaterielDao;
 import edu.mns.locmns.dao.UtilisateurDao;
 import edu.mns.locmns.model.Emprunt;
+import edu.mns.locmns.model.Gestionnaire;
+import edu.mns.locmns.model.Materiel;
 import edu.mns.locmns.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,20 +46,12 @@ public class EmpruntController {
         Date nouvelleDateEmprunt = new SimpleDateFormat("yyyy-MM-dd").parse(dateEmprunt);
 
         return this.empruntDao.findByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, nouvelleDateEmprunt).orElse(null);
-
-    }
-
-    @PostMapping("/reservation")
-    public String createReservation (@RequestBody Emprunt emprunt){
-        this.empruntDao.save(emprunt);
-        return "La demande de réservation est créee";
     }
 
     @DeleteMapping("/gestionnaire/reservation/{idUtilisateur}/{idMateriel}/{dateEmprunt})")
     public String deleteReservation(@PathVariable Integer idUtilisateur, @PathVariable Integer idMateriel, @PathVariable Date dateEmprunt) {
         this.empruntDao.deleteByUtilisateurIdAndMaterielIdMaterielAndDateEmprunt(idUtilisateur, idMateriel, dateEmprunt);
         return "Le matériel a bien été supprimé";
-
     }
 
     @PostMapping("/demande-emprunt")
@@ -70,7 +64,7 @@ public class EmpruntController {
         Integer idMaterielAncien = this.materielDao.RechercheMaterielDemandeEmprunt(emprunt.getMateriel().getModele().getIdModele(), emprunt.getDateEmprunt());
 
         //Enregistre la date du jour pour la date de demande
-        emprunt.setDateDemande(LocalDateTime.now());
+        emprunt.setDateDemandeEmprunt(LocalDateTime.now());
 
         if(idMaterielNouveau != null){
             emprunt.getMateriel().setIdMateriel(idMaterielNouveau);
@@ -120,11 +114,14 @@ public class EmpruntController {
         return listeDemandesEmprunt;
     }
 
-    @PostMapping("gestionnaire/valider-demande-emprunt")
-    public String validationDemandeEmprunt(@RequestBody Emprunt emprunt){
+    @PostMapping("gestionnaire/valider-demande-emprunt/{idGestionnaire}")
+    public String validationDemandeEmprunt(@RequestBody Emprunt emprunt, @PathVariable Integer idGestionnaire){
+        Gestionnaire gestionnaire = new Gestionnaire();
+        gestionnaire.setId(idGestionnaire);
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setGestionnaire(gestionnaire);
         emprunt.setDateValidationEmprunt(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
-        emprunt.setDateDemande(null); //Met la date de demande à null la demande n'existe plus
+        emprunt.setDateDemandeEmprunt(null); //Met la date de demande à null la demande n'existe plus
         empruntDao.save(emprunt);
         return "La demande d'emprunt est validée";
     }
@@ -141,11 +138,14 @@ public class EmpruntController {
         return this.empruntDao.findAllByDateDemandeRetourIsNotNull();
     }
 
-    @PutMapping("gestionnaire/valider-retour-emprunt")
-    public String validationRetourEmprunt(@RequestBody Emprunt emprunt){
+    @PutMapping("gestionnaire/valider-retour-emprunt/{idGestionnaire}")
+    public String validationRetourEmprunt(@RequestBody Emprunt emprunt, @PathVariable Integer idGestionnaire){
+        Gestionnaire gestionnaire = new Gestionnaire();
+        gestionnaire.setId(idGestionnaire);
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setGestionnaire(gestionnaire);
         emprunt.setDateValidationRetour(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
-        emprunt.setdateDemandeRetour(null); //Met la date de demande retour à null la demande de route n'existe plus
+        emprunt.setdateDemandeRetour(null); //Met la date de demande retour à null la demande de retour n'existe plus
         empruntDao.save(emprunt);
         return "La demande de retour est validée";
     }
@@ -179,9 +179,12 @@ public class EmpruntController {
         return this.empruntDao.findAllByDateProlongationIsNotNull();
     }
 
-    @PutMapping("gestionnaire/valider-prolongation-emprunt")
-    public String validationProlongationEmprunt(@RequestBody Emprunt emprunt){
+    @PutMapping("gestionnaire/valider-prolongation-emprunt/{idGestionnaire}")
+    public String validationProlongationEmprunt(@RequestBody Emprunt emprunt, @PathVariable Integer idGestionnaire){
+        Gestionnaire gestionnaire = new Gestionnaire();
+        gestionnaire.setId(idGestionnaire);
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setGestionnaire(gestionnaire);
         emprunt.setDateValidationProlongation(LocalDateTime.now()); //Enregistre la date du jour pour la date de validation
         emprunt.setDateRetour(emprunt.getDateProlongation());
         emprunt.setDateProlongation(null); //Met la date de demande prolongation à null la demande de route n'existe plus
@@ -190,11 +193,34 @@ public class EmpruntController {
     }
 
     @PutMapping("gestionnaire/supprimer-prolongation-emprunt") //On ne supprime pas tout l'emprunt mais on enlève uniquement date demande retour
-    public String supprimerProlonEmprunt(@RequestBody Emprunt emprunt){
+    public String supprimerProlongationEmprunt(@RequestBody Emprunt emprunt){
         emprunt = empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
         emprunt.setDateProlongation(null); //Met la date de demande retour à null la demande est supprimée
         empruntDao.save(emprunt);
         return "La demande de prolongation a bien été supprimée";
+    }
+
+    @PostMapping("gestionnaire/demande-reservation")
+    public String enregistrerReservation(@RequestBody Emprunt emprunt){
+        emprunt.setDateValidationEmprunt(LocalDateTime.now()); //Validation automatique de la demande de réservation faite par le gestionnaire
+        this.empruntDao.save(emprunt);
+        return "La demande de réservation est enregistrée";
+    }
+
+    @GetMapping("gestionnaire/historique-materiels")
+    @JsonView(View.listeHistoriqueMateriels.class)
+    public List listeHistoriqueMateriels(){
+        return this.empruntDao.findAllByDateValidationRetourIsNotNull();
+    }
+
+    @PutMapping("gestionnaire/modification-demande-emprunt")
+    public String ModificationNumeroSerieDemandeEmprunt(@RequestBody Emprunt emprunt){
+        Materiel materiel = new Materiel();
+        materiel.setIdMateriel(emprunt.getMateriel().getIdMateriel());
+        emprunt = this.empruntDao.findById(emprunt.getIdEmprunt()).orElse(null);
+        emprunt.setMateriel(materiel);
+        this.empruntDao.save(emprunt);
+        return "La modification du numéro de série est bien effectuée";
     }
 
 }

@@ -1,6 +1,5 @@
 package edu.mns.locmns.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.mns.locmns.dao.MaterielDao;
 import edu.mns.locmns.model.Materiel;
@@ -19,9 +18,9 @@ public class MaterielController {
     @Autowired
     public MaterielController(MaterielDao materielDao) { this.materielDao = materielDao;}
 
+    @JsonView(View.listeNumerosSerieModification.class)
     @GetMapping("/gestionnaire/liste-materiels")
     public List<Materiel> listeMateriels(){
-
         return this.materielDao.findAll();
     }
 
@@ -39,27 +38,15 @@ public class MaterielController {
 
     @PostMapping("/gestionnaire/materiel")
     public String createMateriel(@RequestBody Materiel materiel) {
-
         this.materielDao.save(materiel);
-
         return "Matériel crée";
-
-        //return "Le materiel " + materiel +  " à été créer";
     }
 
     @DeleteMapping("/gestionnaire/materiel/{id}")
     public String deleteMateriel(@PathVariable int id) {
-
         this.materielDao.deleteById(id);
-
-        return "Le materiel à été supprimer";
-
+        return "Le materiel à été supprimé";
     }
-
-//    @GetMapping("/gestionnaire/materiels-disponibles") //Récupérer la liste des matériels disponibles, non empruntés
-//    public List<Materiel> listeMaterielsDisponibles(){
-//
-//    }
 
     @GetMapping("/gestionnaire/materiels-defectueux") //Récupérer la liste des matériels défectueux
     public List<Materiel> listeMaterielsDisponibles(){
